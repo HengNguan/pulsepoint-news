@@ -1,0 +1,25 @@
+{
+  "name": "pulsepoint-news",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npx firebase deploy --only hosting --project pulsepoint-news"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HengNguan/pulsepoint-news.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/HengNguan/pulsepoint-news/issues"
+  },
+  "homepage": "https://github.com/HengNguan/pulsepoint-news#readme",
+  "devDependencies": {
+    "firebase-tools": "^15.20.0"
+  }
+}

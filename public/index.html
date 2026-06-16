@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PulsePoint News - Global News Updates</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-wrapper">
+        <div class="brand">
+          <h1>PulsePoint News</h1>
+        </div>
+        <nav class="nav-menu">
+          <button class="nav-btn active" data-category="general">All News</button>
+          <button class="nav-btn" data-category="business">Business</button>
+          <button class="nav-btn" data-category="technology">Technology</button>
+          <button class="nav-btn" data-category="health">Health</button>
+          <button class="nav-btn" data-category="science">Science</button>
+          <button class="nav-btn" data-category="sports">Sports</button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+      <!-- Featured Article -->
+      <section class="featured-section" id="featured">
+        <div class="featured-placeholder">Loading featured article...</div>
+      </section>
+
+      <!-- Breaking News Banner -->
+      <section class="breaking-news" id="breaking">
+        <div class="breaking-placeholder">Loading latest news...</div>
+      </section>
+
+      <!-- News Grid -->
+      <section class="news-section">
+        <div class="section-header">
+          <h2>Latest News</h2>
+        </div>
+        <div class="news-grid" id="newsGrid">
+          <div class="loading">Loading articles...</div>
+        </div>
+      </section>
+
+      <!-- Trending Section -->
+      <section class="trending-section">
+        <div class="section-header">
+          <h2>Trending Now</h2>
+        </div>
+        <div class="trending-grid" id="trending">
+          <div class="loading">Loading trending articles...</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-wrapper">
+        <p>&copy; 2026 PulsePoint News. All rights reserved.</p>
+        <p>Powered by real-time news data</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
