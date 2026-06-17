@@ -117,6 +117,8 @@ body {
 .live-page .hero-media {
   margin-left: 0;
   width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .video-card {
@@ -127,6 +129,7 @@ body {
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+  max-width: 1100px;
 }
 
 .live-note {
