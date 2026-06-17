@@ -14,47 +14,56 @@
           <h1>PulsePoint News</h1>
         </div>
         <nav class="nav-menu">
-          <button class="nav-btn active" data-category="general">All News</button>
-          <button class="nav-btn" data-category="business">Business</button>
-          <button class="nav-btn" data-category="technology">Technology</button>
-          <button class="nav-btn" data-category="health">Health</button>
-          <button class="nav-btn" data-category="science">Science</button>
-          <button class="nav-btn" data-category="sports">Sports</button>
-          <a href="about.html" class="nav-btn about-link">About Us</a>
+          <a href="#trending" class="nav-btn">Trending</a>
+          <a href="#corporate" class="nav-btn">Corporate</a>
+          <a href="#economy" class="nav-btn">Economy</a>
+          <a href="#about" class="nav-btn">About Us</a>
         </nav>
+        <div class="header-actions">
+          <a href="live.html" class="live-button">
+            <span class="live-icon" aria-hidden="true"></span>
+            Mock Live
+          </a>
+        </div>
       </div>
     </header>
 
     <!-- Main Content -->
     <main class="main-wrapper">
-      <!-- Featured Article -->
-      <section class="featured-section" id="featured">
-        <div class="featured-placeholder">Loading featured article...</div>
+      <section class="hero-section">
+        <div class="hero-copy">
+          <span class="eyebrow">PulsePoint News</span>
+          <h2>Curated business, economy and trending coverage for Malaysia and beyond.</h2>
+          <p>Explore the latest headlines with corporate updates, economic insights, and team information in one easy-to-maintain experience.</p>
+        </div>
       </section>
 
-      <!-- Breaking News Banner -->
-      <section class="breaking-news" id="breaking">
-        <div class="breaking-placeholder">Loading latest news...</div>
-      </section>
-
-      <!-- News Grid -->
-      <section class="news-section">
+      <section class="content-section" id="trending">
         <div class="section-header">
-          <h2>Latest News</h2>
+          <h2>Trending</h2>
         </div>
-        <div class="news-grid" id="newsGrid">
-          <div class="loading">Loading articles...</div>
-        </div>
+        <div class="section-grid" id="trendingGrid"></div>
       </section>
 
-      <!-- Trending Section -->
-      <section class="trending-section">
+      <section class="content-section" id="corporate">
         <div class="section-header">
-          <h2>Trending Now</h2>
+          <h2>Corporate</h2>
         </div>
-        <div class="trending-grid" id="trending">
-          <div class="loading">Loading trending articles...</div>
+        <div class="section-grid" id="corporateGrid"></div>
+      </section>
+
+      <section class="content-section" id="economy">
+        <div class="section-header">
+          <h2>Economy</h2>
         </div>
+        <div class="section-grid" id="economyGrid"></div>
+      </section>
+
+      <section class="content-section about-section" id="about">
+        <div class="section-header">
+          <h2>About Us</h2>
+        </div>
+        <div class="about-grid" id="aboutGrid"></div>
       </section>
     </main>
 
@@ -62,7 +71,7 @@
     <footer class="site-footer">
       <div class="footer-wrapper">
         <p>&copy; 2026 PulsePoint News. All rights reserved.</p>
-        <p>Powered by real-time news data</p>
+        <p>Powered by curated editorial content</p>
       </div>
     </footer>
 

@@ -1,332 +1,173 @@
-// ============================================
-// STATIC NEWS DATA - Easy to Maintain
-// ============================================
-// Simply add or edit articles in this structure
-// Format: { title, description, category, image, source, date, url }
+const siteData = {
+  trending: [
+    {
+      title: 'Government reconsiders petrol subsidy for T20',
+      summary: 'Officials are reviewing petrol subsidy support tied to the upcoming T20 cricket season, balancing sports funding with national fuel reform goals.',
+      source: 'PulsePoint News'
+    },
+    {
+      title: 'Scanwolf secures RM75 mil piling job for KL high-rise project',
+      summary: 'Scanwolf has won a RM75 million piling contract for a new Kuala Lumpur high-rise development, boosting construction sector confidence.',
+      source: 'PulsePoint News'
+    },
+    {
+      title: 'MITI Launches New EV Policy Starting July',
+      summary: 'Malaysia’s Ministry of Investment, Trade and Industry introduces stricter import conditions for EVs starting July 1, 2026, moving away from the earlier low-threshold exemption framework.',
+      source: 'MITI press release',
+      youtubeId: 'OR9EX-BUH_4',
+      url: 'miti-ev-policy.html'
+    },
+    {
+      title: 'MD continues with share trading as Tanco claims ‘business as usual’',
+      summary: 'Tanco insists business remains normal while its MD proceeds with share trading amid ongoing scrutiny.',
+      source: 'PulsePoint News'
+    },
+    {
+      title: 'Elsa closes nearly 20% higher in ACE Market debut',
+      summary: 'Elsa posted a strong debut on the ACE Market, closing nearly 20% higher after its first trading session.',
+      source: 'PulsePoint News'
+    }
+  ],
+  corporate: [
+    {
+      title: 'CIMB Islamic Bank wins two accolades at The Banker Islamic Banking Awards 2026',
+      summary: 'CIMB Islamic Bank was honored with two awards at the 2026 Banker Islamic Banking Awards, highlighting its growth in digital shariah-compliant services.',
+      source: 'The Edge Malaysia',
+      url: 'https://theedgemalaysia.com/node/807245'
+    },
+    {
+      title: 'Allianz Malaysia to launch basic insurance product next year',
+      summary: 'Allianz Malaysia plans to introduce an affordable basic insurance product aimed at improving protection access for underserved consumers.',
+      source: 'Allianz Malaysia'
+    },
+    {
+      title: 'Capital A says Teleport stake foreclosure capped at arbitration sum owed, plans challenge',
+      summary: 'Capital A confirmed that the Teleport stake foreclosure amount is capped by the arbitration award and intends to challenge the decision.',
+      source: 'PulsePoint News'
+    },
+    {
+      title: 'Bursa approves Vantris Energy’s application to uplift PN17 status',
+      summary: 'Bursa Malaysia approved Vantris Energy’s request to uplift its PN17 status after the company met required corporate governance conditions.',
+      source: 'PulsePoint News'
+    },
+    {
+      title: 'Beshom Holdings to sell 14.6 acres of land in Klang for RM86 mil',
+      summary: 'Beshom Holdings revealed plans to divest 14.6 acres of Klang land for RM86 million as part of its capital recycling strategy.',
+      source: 'The Edge Malaysia',
+      url: 'https://theedgemalaysia.com/node/807228'
+    }
+  ],
+  economy: [
+    {
+      title: 'SME Bank sees Malaysian MSMEs remaining resilient despite weaker sentiment in 1H',
+      summary: 'SME Bank predicts that local MSMEs will remain resilient in the first half of the year despite softer business sentiment.',
+      source: 'The Edge Malaysia',
+      url: 'https://theedgemalaysia.com/node/807209'
+    },
+    {
+      title: 'Customs revenue up 25% to RM23.6 bil in 1Q',
+      summary: 'Malaysia’s customs revenue grew 25% in the first quarter, reaching RM23.6 billion on stronger trade and collection performance.',
+      source: 'The Edge Malaysia',
+      url: 'https://theedgemalaysia.com/node/807208'
+    },
+    {
+      title: 'DOSM: Malaysia’s total trade hits RM3.1 tril in 2025, Penang tops exports',
+      summary: 'DOSM reported total Malaysian trade of RM3.1 trillion in 2025, with Penang leading the export rankings.',
+      source: 'The Edge Malaysia',
+      url: 'https://theedgemalaysia.com/node/807172'
+    },
+    {
+      title: 'Domestic tourism spending reaches RM121.3 bil in 2025 — DOSM',
+      summary: 'Domestic tourism spending climbed to RM121.3 billion in 2025, underlining the sector’s strength in post-pandemic recovery.',
+      source: 'The Edge Malaysia',
+      url: 'https://theedgemalaysia.com/node/807161'
+    },
+    {
+      title: 'Viral ECRL fare rates only speculation, actual rates not announced yet, says MRL',
+      summary: 'Malaysia Rail Link clarified that viral fare rate figures for the ECRL remain speculative, with actual pricing still pending official announcement.',
+      source: 'The Edge Malaysia',
+      url: 'https://theedgemalaysia.com/node/807145'
+    }
+  ],
+  about: [
+    {
+      name: 'Aishhwarya Lakshmi',
+      id: 'JRN2409041',
+      role: 'Communications & Editorial'
+    },
+    {
+      name: 'Thong Qian Hui',
+      id: 'JRN2409048',
+      role: 'Research & Content Strategy'
+    },
+    {
+      name: 'Lee Zhao Qi',
+      id: 'JRN2409045',
+      role: 'Design & User Experience'
+    },
+    {
+      name: 'Chea Zhi Xuan',
+      id: 'JRN2409036',
+      role: 'Product & Web Development'
+    }
+  ]
+};
 
-const newsArticles = [
-  // FEATURED ARTICLE (appears at top)
-  {
-    id: 1,
-    title: 'Global Markets Rally Amid Economic Optimism',
-    description: 'Stock markets across major economies show strong growth as investors gain confidence in economic recovery and sustainable growth opportunities.',
-    category: 'general',
-    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop',
-    source: 'Financial Times',
-    date: 'Jun 16, 2026',
-    url: '#'
-  },
+function createArticleCard(item) {
+  const sourceLine = item.source ? `<p class="article-meta">${item.source}</p>` : '';
+  const link = item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer">Read more</a>` : '';
+  const videoEmbed = item.youtubeId
+    ? `<div class="video-card"><iframe src="https://www.youtube.com/embed/${item.youtubeId}" title="${item.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
+    : '';
   
-  // BREAKING NEWS
-  {
-    id: 2,
-    title: 'Tech Giants Announce New AI Initiatives',
-    description: 'Leading technology companies unveil groundbreaking artificial intelligence projects aimed at solving climate issues and improving accessibility.',
-    category: 'technology',
-    image: 'https://images.unsplash.com/photo-1677442d019cecf3d4fc58b55c6a1f1f?w=800&h=500&fit=crop',
-    source: 'TechCrunch',
-    date: 'Jun 15, 2026',
-    url: '#'
-  },
+  const titleElement = item.url 
+    ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"><h3>${item.title}</h3></a>`
+    : `<h3>${item.title}</h3>`;
 
-  // GENERAL NEWS
-  {
-    id: 3,
-    title: 'International Climate Summit Reaches Historic Agreement',
-    description: 'World leaders sign landmark climate accord, committing to significant emission reduction targets by 2035.',
-    category: 'general',
-    image: 'https://images.unsplash.com/photo-1569163139394-de4798aa62b3?w=800&h=500&fit=crop',
-    source: 'BBC',
-    date: 'Jun 14, 2026',
-    url: '#'
-  },
-  {
-    id: 4,
-    title: 'Space Agency Launches New Mars Exploration Mission',
-    description: 'Historic launch sends advanced rover to search for signs of ancient microbial life on Mars and collect samples.',
-    category: 'science',
-    image: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=500&fit=crop',
-    source: 'NASA',
-    date: 'Jun 13, 2026',
-    url: '#'
-  },
-  {
-    id: 5,
-    title: 'Healthcare Innovation Transforms Patient Care',
-    description: 'New medical technologies are revolutionizing treatment methods and improving patient outcomes globally.',
-    category: 'health',
-    image: 'https://images.unsplash.com/photo-1631217314831-c6227db76b6e?w=800&h=500&fit=crop',
-    source: 'Medical News Today',
-    date: 'Jun 12, 2026',
-    url: '#'
-  },
-
-  // BUSINESS NEWS
-  {
-    id: 6,
-    title: 'Fortune 500 Companies Report Record Profits',
-    description: 'Leading corporations announce exceptional earnings driven by digital transformation initiatives and market expansion.',
-    category: 'business',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=500&fit=crop',
-    source: 'Bloomberg',
-    date: 'Jun 16, 2026',
-    url: '#'
-  },
-  {
-    id: 7,
-    title: 'Startup Scene Booms with Record Funding',
-    description: 'Venture capital investments hit all-time highs as investors bet on emerging technologies and innovative solutions.',
-    category: 'business',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=500&fit=crop',
-    source: 'Crunchbase',
-    date: 'Jun 11, 2026',
-    url: '#'
-  },
-
-  // TECHNOLOGY NEWS
-  {
-    id: 8,
-    title: 'Revolutionary Quantum Computing Breakthrough',
-    description: 'Scientists achieve major milestone in quantum computing, opening new possibilities for complex problem-solving in cryptography.',
-    category: 'technology',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=500&fit=crop',
-    source: 'Wired',
-    date: 'Jun 16, 2026',
-    url: '#'
-  },
-  {
-    id: 9,
-    title: 'Smartphone Technology Reaches New Heights',
-    description: 'Latest devices feature breakthrough display technology and all-day battery life with advanced power management.',
-    category: 'technology',
-    image: 'https://images.unsplash.com/photo-1678203422067-b98c4a59bd54?w=800&h=500&fit=crop',
-    source: 'The Verge',
-    date: 'Jun 10, 2026',
-    url: '#'
-  },
-
-  // HEALTH NEWS
-  {
-    id: 10,
-    title: 'Medical Breakthrough in Cancer Treatment',
-    description: 'Researchers announce successful trials of new immunotherapy treatment for advanced cancers with promising results.',
-    category: 'health',
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop',
-    source: 'Health News',
-    date: 'Jun 16, 2026',
-    url: '#'
-  },
-  {
-    id: 11,
-    title: 'Exercise Linked to Better Cognitive Health',
-    description: 'New study shows regular physical activity significantly improves memory and reduces cognitive decline in older adults.',
-    category: 'health',
-    image: 'https://images.unsplash.com/photo-1517836357463-d25ddfcbf042?w=800&h=500&fit=crop',
-    source: 'Medical Research',
-    date: 'Jun 09, 2026',
-    url: '#'
-  },
-
-  // SCIENCE NEWS
-  {
-    id: 12,
-    title: 'New Element Discovered in Arctic Ice Core',
-    description: 'Scientists uncover rare elements in ancient ice, providing insights into Earth\'s geological history.',
-    category: 'science',
-    image: 'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&h=500&fit=crop',
-    source: 'Nature',
-    date: 'Jun 16, 2026',
-    url: '#'
-  },
-  {
-    id: 13,
-    title: 'Ocean Temperatures Stabilize with Climate Action',
-    description: 'Latest data shows positive trends in ocean health as global warming efforts begin to show measurable results.',
-    category: 'science',
-    image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&h=500&fit=crop',
-    source: 'Science Daily',
-    date: 'Jun 08, 2026',
-    url: '#'
-  },
-
-  // SPORTS NEWS
-  {
-    id: 14,
-    title: 'Championship Team Wins Historic Title',
-    description: 'In a thrilling match, the underdog team defeats the defending champions in overtime, securing their first championship.',
-    category: 'sports',
-    image: 'assets/olympic-games.png',
-    source: 'Sports World',
-    date: 'Jun 16, 2026',
-    url: '#'
-  },
-  {
-    id: 15,
-    title: 'Olympic Games Break Viewership Records',
-    description: 'Global audiences tune in for unprecedented coverage of the international sporting event with online streaming.',
-    category: 'sports',
-    image: 'assets/olympic-games.png',
-    source: 'ESPN',
-    date: 'Jun 07, 2026',
-    url: '#'
-  }
-];
-
-// ============================================
-// END OF NEWS DATA
-// ============================================
-
-let currentCategory = 'general';
-let allArticles = newsArticles;
-
-// Initialize the app
-document.addEventListener('DOMContentLoaded', () => {
-  setupNavigation();
-  loadArticles('general');
-});
-
-// Setup navigation buttons
-function setupNavigation() {
-  const navBtns = document.querySelectorAll('.nav-btn');
-  navBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      navBtns.forEach(b => b.classList.remove('active'));
-      e.target.classList.add('active');
-      currentCategory = e.target.dataset.category;
-      loadArticles(currentCategory);
-    });
-  });
-}
-
-// Load and filter articles by category
-function loadArticles(category) {
-  currentCategory = category;
-  
-  // Filter articles by category
-  const filtered = category === 'general' 
-    ? allArticles 
-    : allArticles.filter(a => a.category === category);
-  
-  if (filtered.length > 0) {
-    displayFeaturedArticle(filtered[0]);
-    displayBreakingNews(filtered.slice(1, 4));
-    displayNewsGrid(filtered.slice(4, 13));
-    displayTrending(filtered.slice(13, 17));
-  } else {
-    showNoResults();
-  }
-}
-
-// Display featured article
-function displayFeaturedArticle(article) {
-  const container = document.getElementById('featured');
-  
-  container.innerHTML = `
-    <article class="featured-article">
-      <img src="${article.image}" alt="${article.title}" class="featured-image" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop'">
-      <div class="featured-content">
-        <span class="featured-tag">Featured</span>
-        <h3>${article.title}</h3>
-        <p>${truncateText(article.description, 200)}</p>
-        <div class="featured-meta">
-          <p>${article.source} • ${article.date}</p>
-          <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="featured-link">Read Full Story →</a>
-        </div>
+  return `
+    <article class="section-card">
+      <div class="section-card-body">
+        ${titleElement}
+        <p>${item.summary}</p>
+        ${sourceLine}
+        ${link}
       </div>
+      ${videoEmbed}
     </article>
   `;
 }
 
-// Display breaking news
-function displayBreakingNews(articles) {
-  const container = document.getElementById('breaking');
-  if (!articles || articles.length === 0) return;
-  
-  const article = articles[0];
-  
-  container.innerHTML = `
-    <div class="breaking-content">
-      <span class="breaking-label">⚡ Breaking News</span>
-      <h3>${article.title}</h3>
-      <p>${truncateText(article.description, 150)}</p>
-      <p class="featured-meta" style="margin-top: 0.5rem;">${article.source} • ${article.date}</p>
-    </div>
-  `;
+function renderSection(sectionId, items) {
+  const container = document.getElementById(`${sectionId}Grid`);
+  if (!container) return;
+  container.innerHTML = items.map(createArticleCard).join('');
 }
 
-// Display news grid
-function displayNewsGrid(articles) {
-  const container = document.getElementById('newsGrid');
-  
-  if (!articles || articles.length === 0) {
-    container.innerHTML = '<div class="loading">No articles found</div>';
-    return;
-  }
-  
-  const html = articles.map(article => {
-    return `
-      <article class="news-card">
-        <img src="${article.image}" alt="${article.title}" class="news-card-image" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop'">
-        <div class="news-card-content">
-          <span class="news-card-tag">${article.category.toUpperCase()}</span>
-          <h3>${article.title}</h3>
-          <p>${truncateText(article.description, 120)}</p>
-          <div class="news-card-meta">
-            <p>${article.source} • ${article.date}</p>
-            <a href="${article.url}" target="_blank" rel="noopener noreferrer">Read more →</a>
-          </div>
+function renderAboutSection() {
+  const container = document.getElementById('aboutGrid');
+  if (!container) return;
+  container.innerHTML = siteData.about
+    .map(member => `
+      <div class="about-card">
+        <div class="about-avatar">${member.name
+          .split(' ')
+          .map(word => word[0])
+          .join('')}</div>
+        <div class="about-details">
+          <h3>${member.name}</h3>
+          <p class="student-id">${member.id}</p>
+          <p>${member.role}</p>
         </div>
-      </article>
-    `;
-  }).join('');
-  
-  container.innerHTML = html;
+      </div>
+    `)
+    .join('');
 }
 
-// Display trending articles
-function displayTrending(articles) {
-  const container = document.getElementById('trending');
-  
-  if (!articles || articles.length === 0) {
-    container.innerHTML = '<div class="loading">No trending articles</div>';
-    return;
-  }
-  
-  const html = articles.map((article, index) => {
-    return `
-      <article class="trending-card">
-        <img src="${article.image}" alt="${article.title}" class="trending-card-image" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop'">
-        <div class="trending-card-content">
-          <h4>${article.title}</h4>
-          <p>${truncateText(article.description, 90)}</p>
-        </div>
-      </article>
-    `;
-  }).join('');
-  
-  container.innerHTML = html;
+function initPage() {
+  renderSection('trending', siteData.trending);
+  renderSection('corporate', siteData.corporate);
+  renderSection('economy', siteData.economy);
+  renderAboutSection();
 }
 
-// Utility: Truncate text
-function truncateText(text, length) {
-  if (!text) return '';
-  return text.length > length ? text.substring(0, length) + '...' : text;
-}
-
-// Show error message
-function showError() {
-  document.getElementById('newsGrid').innerHTML = `
-    <div class="loading">
-      <p>Unable to load news. Please try refreshing the page.</p>
-    </div>
-  `;
-}
-
-// Show no results message
-function showNoResults() {
-  document.getElementById('newsGrid').innerHTML = `
-    <div class="loading">
-      <p>No articles found for this category.</p>
-    </div>
-  `;
-}
+document.addEventListener('DOMContentLoaded', initPage);
