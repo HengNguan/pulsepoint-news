@@ -155,7 +155,7 @@ const newsArticles = [
     title: 'Championship Team Wins Historic Title',
     description: 'In a thrilling match, the underdog team defeats the defending champions in overtime, securing their first championship.',
     category: 'sports',
-    image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=500&fit=crop',
+    image: 'assets/olympic-games.png',
     source: 'Sports World',
     date: 'Jun 16, 2026',
     url: '#'
@@ -165,7 +165,7 @@ const newsArticles = [
     title: 'Olympic Games Break Viewership Records',
     description: 'Global audiences tune in for unprecedented coverage of the international sporting event with online streaming.',
     category: 'sports',
-    image: 'https://images.unsplash.com/photo-1483389127117-b6a2102724ae?w=800&h=500&fit=crop',
+    image: 'assets/olympic-games.png',
     source: 'ESPN',
     date: 'Jun 07, 2026',
     url: '#'
