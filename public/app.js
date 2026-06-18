@@ -3,7 +3,9 @@ const siteData = {
     {
       title: 'Government reconsiders petrol subsidy for T20',
       summary: 'Officials are reviewing petrol subsidy support tied to the upcoming T20 cricket season, balancing sports funding with national fuel reform goals.',
-      source: 'PulsePoint News'
+      source: 'PulsePoint News',
+      image: 'assets/olympic-games.png',
+      url: 'government-petrol-subsidy-t20.html'
     },
     {
       title: 'Scanwolf secures RM75 mil piling job for KL high-rise project',
@@ -113,15 +115,14 @@ const siteData = {
   ]
 };
 
-function createArticleCard(item) {
+function createArticleCard(item, idx, sectionId) {
   const sourceLine = item.source ? `<p class="article-meta">${item.source}</p>` : '';
-  const link = item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer">Read more</a>` : '';
   const videoEmbed = item.youtubeId
     ? `<div class="video-card"><iframe src="https://www.youtube.com/embed/${item.youtubeId}" title="${item.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
     : '';
-  
-  const titleElement = item.url 
-    ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"><h3>${item.title}</h3></a>`
+
+  const titleElement = item.url
+    ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer"><h3 class="clickable-title">${item.title}</h3></a>`
     : `<h3>${item.title}</h3>`;
 
   return `
@@ -130,18 +131,47 @@ function createArticleCard(item) {
         ${titleElement}
         <p>${item.summary}</p>
         ${sourceLine}
-        ${link}
       </div>
       ${videoEmbed}
     </article>
   `;
 }
 
+function createFeaturedHero(item) {
+  const imageBlock = item.image
+    ? `<div class="featured-image"><img src="${item.image}" alt="${item.title}"></div>`
+    : '';
+
+  return `
+    <section class="featured-hero">
+      <div class="hero-copy">
+        <h2 class="featured-title">
+          <a class="hero-live-label" href="live.html" aria-label="View live coverage"><span class="live-icon" aria-hidden="true"></span>Live</a>
+          <a class="featured-title-link" href="${item.url}">${item.title}</a>
+        </h2>
+        <p class="featured-summary">${item.summary}</p>
+        <div class="featured-meta">
+          <span><strong>Source:</strong> ${item.source}</span>
+        </div>
+      </div>
+      ${imageBlock}
+    </section>
+  `;
+}
+
+function renderFeaturedHero(item) {
+  const container = document.getElementById('featuredHero');
+  if (!container || !item) return;
+  container.innerHTML = createFeaturedHero(item);
+}
+
 function renderSection(sectionId, items) {
   const container = document.getElementById(`${sectionId}Grid`);
   if (!container) return;
-  container.innerHTML = items.map(createArticleCard).join('');
+  container.innerHTML = items.map((it, i) => createArticleCard(it, i, sectionId)).join('');
 }
+
+/* breaking banner removed; featured state handled in the first trending card */
 
 function renderAboutSection() {
   const container = document.getElementById('aboutGrid');
@@ -164,7 +194,8 @@ function renderAboutSection() {
 }
 
 function initPage() {
-  renderSection('trending', siteData.trending);
+  renderFeaturedHero(siteData.trending[0]);
+  renderSection('trending', siteData.trending.slice(1));
   renderSection('corporate', siteData.corporate);
   renderSection('economy', siteData.economy);
   renderAboutSection();
