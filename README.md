@@ -12,3 +12,6 @@ FIREBASE_TOKEN=your_token_here npx firebase deploy --only hosting --project puls
 ```
 
 If you want me to continue, please paste the `FIREBASE_TOKEN` here.
+
+## Live Demo
+Check out [PulsePoint News](https://pulsepoint-news.web.app/).
