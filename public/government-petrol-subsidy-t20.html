@@ -408,7 +408,8 @@
         const STORAGE_KEY = 'ppn_poll_votes_v1';
 
         function defaultCounts() {
-          return { yes: 0, no: 0, prefer_targeted: 0, unsure: 0 };
+          // Seed with dummy counts so the poll shows initial results
+          return { yes: 120, no: 80, prefer_targeted: 60, unsure: 30 };
         }
 
         function getCounts() {
