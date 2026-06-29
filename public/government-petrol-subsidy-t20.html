@@ -179,6 +179,65 @@
       .back-link a:hover {
         text-decoration: underline;
       }
+      /* Poll styles */
+      .poll-section {
+        max-width: 900px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background: var(--gray-light);
+        border-radius: 16px;
+        border: 1px solid var(--border);
+      }
+
+      .poll-section h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      .poll-question {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .poll-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .poll-option label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+
+      .poll-option input[type="radio"] {
+        transform: scale(1.05);
+      }
+
+      .poll-results {
+        margin-top: 1rem;
+      }
+
+      .poll-bar {
+        height: 12px;
+        background: var(--gray-light);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .poll-bar-fill {
+        height: 100%;
+        background: var(--accent);
+        width: 0%;
+        transition: width 300ms ease;
+      }
     </style>
   </head>
   <body>
@@ -210,35 +269,39 @@
               <span class="live-icon" aria-hidden="true"></span>
               Live Coverage
             </a>
-            <h1 class="article-title">Government reconsiders petrol subsidy for T20</h1>
+            <h1 class="article-title">Government re-evaluates petrol subsidies for the high-income group</h1>
           </div>
           <div class="article-meta-info">
-            <span><strong>By:</strong> PULSEPOINT NEWS</span>
-            <span><strong>Source:</strong> Government advisory</span>
+            <span><strong>By:</strong> AISHHWARYA LAKSHMI</span>
+            <span><strong>Source:</strong> PulsePoint News / NEAC</span>
             <span><strong>Published:</strong> 2026</span>
           </div>
         </div>
 
         <div class="article-image">
-          <img src="assets/olympic-games.png" alt="News illustration" />
+          <img src="assets/anwar.png" alt="News illustration" />
         </div>
 
         <div class="article-body">
-          <p>KUALA LUMPUR: The government is reviewing its petrol subsidy framework for the T20 income group amid growing pressure to rebalance public spending and improve long-term energy efficiency.</p>
+          <p>KUALA LUMPUR: Prime Minister Datuk Seri Anwar Ibrahim said that the government will soon finalise a more comprehensive fuel subsidy proposal for the high-income group in Malaysia.</p>
 
-          <p>Officials said an internal assessment will look at whether the current subsidy arrangement is sustainable and whether a more targeted approach could free up funds for infrastructure and green energy programs.</p>
+          <p>Anwar said the proposal is being reviewed by the National Economic Action Council’s (NEAC) Crisis Management Task Force, currently led by Tan Sri Mohd Hassan Marican.</p>
 
-          <p>The review follows several weeks of stakeholder consultations with industry representatives, economists and consumer groups. Early feedback suggests that while the T20 group benefits from current subsidy levels, the policy may not be aligned with broader equity goals.</p>
+          <p>According to Anwar, who is also the Finance Minister, the table was proposed a month ago by the task force with discussions being held on whether it should involve T5, T10, T15 or T20 income groups.</p>
 
-          <p>Sources close to the review said the government is considering a phased approach that would maintain support for low-income households while gradually reducing subsidies for higher earners in the T20 band.</p>
+          <p>“In principle, we agree, but we want to ensure it does not affect the upper-middle class. They are working on it, and I hope it will be finalised soon,” he told the reporters on the sidelines of an event held at Universiti Malaya.</p>
 
-          <p>Economic analysts note that petrol consumption among the T20 has remained relatively stable, and any changes will need to be carefully communicated to avoid sudden shifts in market expectations.</p>
+          <p>Economist Ahmed Razman Abdul Latiff has previously said that the exclusion of the T20 group from the subsidy programme can help the government save up to RM1.5 billion a month.</p>
 
-          <p>The proposed adjustment is not intended to disrupt daily mobility, but rather to preserve subsidies for targeted groups and improve the effectiveness of the national fuel support system.</p>
+          <p>He said that instead of removing the T20 group from the BUDI95 programme entirely, he suggested giving them a lower monthly quota compared to the other groups.</p>
 
-          <p>As the matter develops, ministers have emphasized that no final decision has been made. The review is expected to continue through the next quarter, with an interim report due to be released after further consultation.</p>
+          <p>Recently, Umno Youth chief Datuk Dr Muhamad Akmal Saleh also proposed that the government redirect fuel subsidies to the B40 and M40 groups, who are more affected by the rise of living costs.</p>
 
-          <p>In the meantime, the government continues to monitor oil price movements and regional energy trends to ensure that any changes are introduced in a way that supports both economic stability and social fairness.</p>
+          <p>“In the current economic situation, we need to re-rationalise subsidies and implement them in a very targeted manner to those who really need them, including by re-channelling fuel subsidies from T20 to B40 and M40,” he said.</p>
+
+          <p>The proposal was among the 25 main resolutions discussed in the RIMBUN 2.0 programme which focused on the country’s economic sovereignty.</p>
+
+          <p>Currently, RON95 petrol is subsidised at RM1.99 a litre for all Malaysians with a valid driving licence, subject to 200 litres a month.</p>
         </div>
 
         <!-- Comments Section -->
@@ -273,6 +336,56 @@
           </p>
         </div>
       </article>
+
+      <!-- Reader Poll Section -->
+      <section class="poll-section" aria-labelledby="pollHeading">
+        <h2 id="pollHeading" class="poll-question">Do you support excluding the high-income (T20) group from petrol subsidies?</h2>
+
+        <form id="pollForm">
+          <div class="poll-options">
+            <div class="poll-option">
+              <label>
+                <input type="radio" name="poll" value="yes"> Yes, I support excluding T20
+              </label>
+            </div>
+            <div class="poll-option">
+              <label>
+                <input type="radio" name="poll" value="no"> No, keep subsidies universal
+              </label>
+            </div>
+            <div class="poll-option">
+              <label>
+                <input type="radio" name="poll" value="prefer_targeted"> Prefer more targeted support for B40/M40
+              </label>
+            </div>
+            <div class="poll-option">
+              <label>
+                <input type="radio" name="poll" value="unsure"> Unsure / Need more information
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-submit">Vote</button>
+            <button type="button" id="viewResults" class="btn btn-clear">View Results</button>
+          </div>
+        </form>
+
+        <div id="pollResults" class="poll-results" aria-live="polite" style="display:none; margin-top:1rem;">
+          <div><strong>Results</strong></div>
+          <div style="margin-top:0.5rem;">
+            <div>Yes: <span id="count-yes">0</span></div>
+            <div class="poll-bar" aria-hidden="true"><div id="fill-yes" class="poll-bar-fill" style="width:0%"></div></div>
+            <div>No: <span id="count-no">0</span></div>
+            <div class="poll-bar" aria-hidden="true"><div id="fill-no" class="poll-bar-fill" style="width:0%"></div></div>
+            <div>Prefer targeted: <span id="count-prefer_targeted">0</span></div>
+            <div class="poll-bar" aria-hidden="true"><div id="fill-prefer_targeted" class="poll-bar-fill" style="width:0%"></div></div>
+            <div>Unsure: <span id="count-unsure">0</span></div>
+            <div class="poll-bar" aria-hidden="true"><div id="fill-unsure" class="poll-bar-fill" style="width:0%"></div></div>
+          </div>
+          <p style="margin-top:0.75rem; font-size:0.9rem; color:#7b8794;"><em>Poll is for reader feedback only and is not a formal survey.</em></p>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -289,6 +402,70 @@
         alert('Thank you for your comment! It will be reviewed and published shortly.');
         this.reset();
       });
+
+      // Simple reader poll handling (stores counts in localStorage)
+      (function() {
+        const STORAGE_KEY = 'ppn_poll_votes_v1';
+
+        function defaultCounts() {
+          return { yes: 0, no: 0, prefer_targeted: 0, unsure: 0 };
+        }
+
+        function getCounts() {
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            return raw ? JSON.parse(raw) : defaultCounts();
+          } catch (err) {
+            return defaultCounts();
+          }
+        }
+
+        function saveCounts(counts) {
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(counts)); } catch (e) {}
+        }
+
+        function updateResultsUI() {
+          const counts = getCounts();
+          const total = Object.values(counts).reduce((a,b)=>a+b,0) || 1;
+          document.getElementById('count-yes').textContent = counts.yes;
+          document.getElementById('count-no').textContent = counts.no;
+          document.getElementById('count-prefer_targeted').textContent = counts.prefer_targeted;
+          document.getElementById('count-unsure').textContent = counts.unsure;
+          document.getElementById('fill-yes').style.width = Math.round((counts.yes/total)*100) + '%';
+          document.getElementById('fill-no').style.width = Math.round((counts.no/total)*100) + '%';
+          document.getElementById('fill-prefer_targeted').style.width = Math.round((counts.prefer_targeted/total)*100) + '%';
+          document.getElementById('fill-unsure').style.width = Math.round((counts.unsure/total)*100) + '%';
+        }
+
+        function showResults() {
+          document.getElementById('pollResults').style.display = 'block';
+          updateResultsUI();
+        }
+
+        const pollForm = document.getElementById('pollForm');
+        pollForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const choice = (new FormData(pollForm)).get('poll');
+          if (!choice) { alert('Please select an option before voting.'); return; }
+          const counts = getCounts();
+          if (!counts[choice] && counts[choice] !== 0) {
+            // unknown choice - ignore
+            return;
+          }
+          counts[choice] += 1;
+          saveCounts(counts);
+          showResults();
+          // Disable inputs after voting
+          Array.from(pollForm.elements).forEach(el => el.disabled = true);
+        });
+
+        document.getElementById('viewResults').addEventListener('click', function() {
+          showResults();
+        });
+
+        // Initialize on load
+        updateResultsUI();
+      })();
     </script>
   </body>
 </html>

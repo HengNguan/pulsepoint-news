@@ -1,10 +1,10 @@
 const siteData = {
   trending: [
     {
-      title: 'Government reconsiders petrol subsidy for T20',
+      title: 'Government re-evaluates petrol subsidies for the high-income group',
       summary: 'Officials are reviewing petrol subsidy support tied to the upcoming T20 cricket season, balancing sports funding with national fuel reform goals.',
       source: 'PulsePoint News',
-      image: 'assets/olympic-games.png',
+      image: 'assets/anwar.png',
       url: 'government-petrol-subsidy-t20.html'
     },
     {
@@ -95,22 +95,26 @@ const siteData = {
     {
       name: 'Aishhwarya Lakshmi',
       id: 'JRN2409041',
-      role: 'Communications & Editorial'
-    },
-    {
-      name: 'Thong Qian Hui',
-      id: 'JRN2409048',
-      role: 'Research & Content Strategy'
-    },
-    {
-      name: 'Lee Zhao Qi',
-      id: 'JRN2409045',
-      role: 'Design & User Experience'
+      role: 'Technical Lead',
+      description: 'Responsible for managing the technical aspects of production and ensuring smooth operation of digital platforms and media tools.'
     },
     {
       name: 'Chea Zhi Xuan',
       id: 'JRN2409036',
-      role: 'Product & Web Development'
+      role: 'Researcher',
+      description: 'Conducts background research, gathers information, and verifies sources to support accurate and reliable news reporting.'
+    },
+    {
+      name: 'Lee Zhao Qi',
+      id: 'JRN2409045',
+      role: 'News Anchor',
+      description: 'Presents news stories and serves as the voice and face of PulsePoint News during broadcasts and media presentations.'
+    },
+    {
+      name: 'Thong Qian Hui',
+      id: 'JRN2409048',
+      role: 'Editor',
+      description: 'Oversees content editing, proofreading, and story refinement to maintain clarity, accuracy, and consistency across all publications.'
     }
   ]
 };
@@ -186,7 +190,8 @@ function renderAboutSection() {
         <div class="about-details">
           <h3>${member.name}</h3>
           <p class="student-id">${member.id}</p>
-          <p>${member.role}</p>
+          <p class="about-role">${member.role}</p>
+          <p>${member.description}</p>
         </div>
       </div>
     `)

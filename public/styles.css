@@ -597,15 +597,28 @@ h3 {
   padding: 2rem;
   display: grid;
   gap: 1rem;
-  align-items: center;
-  text-align: center;
+  align-items: start;
+  text-align: left;
   box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
 }
 
-.about-avatar {
+.about-header {
+  max-width: 56rem;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.about-header p {
+  margin: 1rem auto 0;
+  color: #4f5565;
+  line-height: 1.75;
+  max-width: 44rem;
+}
+
+.about-card .about-avatar {
   width: 72px;
   height: 72px;
-  margin: 0 auto;
+  margin: 0;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--accent) 0%, #a71f1f 100%);
   color: var(--secondary);
@@ -632,6 +645,29 @@ h3 {
   margin: 0;
   color: #626f81;
   line-height: 1.7;
+}
+
+.about-intro-copy {
+  max-width: 58rem;
+  margin: 0 auto 2rem;
+  color: #4f5565;
+  line-height: 1.75;
+}
+
+.about-intro-copy p {
+  margin: 0 0 1rem;
+}
+
+.about-role {
+  margin: 0.5rem 0 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.team-grid {
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .site-footer {
