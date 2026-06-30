@@ -396,6 +396,8 @@
       </div>
     </footer>
 
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script>
       document.getElementById('commentForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -403,77 +405,189 @@
         this.reset();
       });
 
-      // Simple reader poll handling (stores counts in localStorage)
-      (function() {
-        const STORAGE_KEY = 'ppn_poll_votes_v1';
+      const FIREBASE_CONFIG = {
+        apiKey: 'AIzaSyAscn7wBN0TS_-TU_Pcaoq0fYbtHeXWyN8',
+        authDomain: 'pulsepoint-news.firebaseapp.com',
+        projectId: 'pulsepoint-news',
+        storageBucket: 'pulsepoint-news.firebasestorage.app',
+        messagingSenderId: '215830621735',
+        appId: '1:215830621735:web:97efb9f31b65719b36e802'
+      };
 
-        function defaultCounts() {
-          // Seed with dummy counts so the poll shows initial results
-          return { yes: 120, no: 80, prefer_targeted: 60, unsure: 30 };
+      const POLL_DOC_PATH = 'polls/petrol_subsidy_t20';
+      const STORAGE_KEY = 'ppn_poll_votes_v1';
+      const DEFAULT_COUNTS = { yes: 120, no: 80, prefer_targeted: 60, unsure: 30 };
+
+      let firebaseEnabled = false;
+      let firestoreDb;
+      let pollDocRef;
+      let unsubscribeSnapshot;
+
+      function isFirebaseConfigValid(config) {
+        return config.apiKey && config.projectId && config.authDomain && config.appId &&
+          !config.apiKey.includes('YOUR_') &&
+          !config.authDomain.includes('YOUR_') &&
+          !config.appId.includes('YOUR_');
+      }
+
+      function normalizeCounts(counts) {
+        return {
+          yes: Number(counts.yes || 0),
+          no: Number(counts.no || 0),
+          prefer_targeted: Number(counts.prefer_targeted || 0),
+          unsure: Number(counts.unsure || 0)
+        };
+      }
+
+      function updateResultsUI(counts) {
+        const normalized = normalizeCounts(counts);
+        const values = Object.values(normalized);
+        const maxCount = Math.max(...values, 0);
+
+        document.getElementById('count-yes').textContent = normalized.yes;
+        document.getElementById('count-no').textContent = normalized.no;
+        document.getElementById('count-prefer_targeted').textContent = normalized.prefer_targeted;
+        document.getElementById('count-unsure').textContent = normalized.unsure;
+
+        const widthFor = (value) => {
+          if (maxCount <= 0) return '0%';
+          return Math.round((value / maxCount) * 100) + '%';
+        };
+
+        document.getElementById('fill-yes').style.width = widthFor(normalized.yes);
+        document.getElementById('fill-no').style.width = widthFor(normalized.no);
+        document.getElementById('fill-prefer_targeted').style.width = widthFor(normalized.prefer_targeted);
+        document.getElementById('fill-unsure').style.width = widthFor(normalized.unsure);
+      }
+
+      function getCountsLocal() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          return raw ? JSON.parse(raw) : DEFAULT_COUNTS;
+        } catch (err) {
+          return DEFAULT_COUNTS;
+        }
+      }
+
+      function saveCountsLocal(counts) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
+        } catch (e) {
+          console.warn('Could not save poll data locally', e);
+        }
+      }
+
+      async function initializeFirebase() {
+        if (!isFirebaseConfigValid(FIREBASE_CONFIG)) {
+          console.warn('Firebase config is not set. Poll will use local storage fallback.');
+          return;
         }
 
-        function getCounts() {
-          try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : defaultCounts();
-          } catch (err) {
-            return defaultCounts();
+        try {
+          firebase.initializeApp(FIREBASE_CONFIG);
+          firestoreDb = firebase.firestore();
+          pollDocRef = firestoreDb.doc(POLL_DOC_PATH);
+          firebaseEnabled = true;
+
+          await ensurePollDocument();
+          unsubscribeSnapshot = pollDocRef.onSnapshot((snapshot) => {
+            if (snapshot.exists) {
+              updateResultsUI(normalizeCounts(snapshot.data()));
+            }
+          }, (err) => {
+            console.warn('Realtime poll listener failed:', err);
+          });
+        } catch (err) {
+          console.warn('Firebase initialization failed:', err);
+          firebaseEnabled = false;
+        }
+      }
+
+      async function ensurePollDocument() {
+        const snapshot = await pollDocRef.get();
+        if (!snapshot.exists) {
+          await pollDocRef.set(DEFAULT_COUNTS);
+        }
+      }
+
+      async function fetchCounts() {
+        if (!firebaseEnabled) {
+          return getCountsLocal();
+        }
+
+        try {
+          const snapshot = await pollDocRef.get();
+          if (snapshot.exists) {
+            return normalizeCounts(snapshot.data());
           }
+          return DEFAULT_COUNTS;
+        } catch (err) {
+          console.warn('Failed to fetch poll counts from Firebase:', err);
+          return getCountsLocal();
+        }
+      }
+
+      async function submitVote(choice) {
+        if (!firebaseEnabled) {
+          const counts = getCountsLocal();
+          counts[choice] = (counts[choice] || 0) + 1;
+          saveCountsLocal(counts);
+          return counts;
         }
 
-        function saveCounts(counts) {
-          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(counts)); } catch (e) {}
+        try {
+          return await firestoreDb.runTransaction(async (transaction) => {
+            const snapshot = await transaction.get(pollDocRef);
+            let counts = DEFAULT_COUNTS;
+            if (snapshot.exists) {
+              counts = normalizeCounts(snapshot.data());
+            }
+            counts[choice] = (counts[choice] || 0) + 1;
+            transaction.set(pollDocRef, counts);
+            return counts;
+          });
+        } catch (err) {
+          console.warn('Firebase vote transaction failed:', err);
+          const counts = getCountsLocal();
+          counts[choice] = (counts[choice] || 0) + 1;
+          saveCountsLocal(counts);
+          return counts;
+        }
+      }
+
+      function showResults() {
+        document.getElementById('pollResults').style.display = 'block';
+      }
+
+      async function refreshPollResults() {
+        const counts = await fetchCounts();
+        updateResultsUI(counts);
+        showResults();
+      }
+
+      document.getElementById('viewResults').addEventListener('click', function() {
+        refreshPollResults();
+      });
+
+      document.getElementById('pollForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const choice = (new FormData(this)).get('poll');
+        if (!choice) {
+          alert('Please select an option before voting.');
+          return;
         }
 
-        function updateResultsUI() {
-          const counts = getCounts();
-          const values = Object.values(counts);
-          const maxCount = Math.max(...values, 0);
+        const counts = await submitVote(choice);
+        updateResultsUI(counts);
+        showResults();
 
-          document.getElementById('count-yes').textContent = counts.yes;
-          document.getElementById('count-no').textContent = counts.no;
-          document.getElementById('count-prefer_targeted').textContent = counts.prefer_targeted;
-          document.getElementById('count-unsure').textContent = counts.unsure;
+        Array.from(this.elements).forEach(el => el.disabled = true);
+      });
 
-          const widthFor = (value) => {
-            if (maxCount <= 0) return '0%';
-            return Math.round((value / maxCount) * 100) + '%';
-          };
-
-          document.getElementById('fill-yes').style.width = widthFor(counts.yes);
-          document.getElementById('fill-no').style.width = widthFor(counts.no);
-          document.getElementById('fill-prefer_targeted').style.width = widthFor(counts.prefer_targeted);
-          document.getElementById('fill-unsure').style.width = widthFor(counts.unsure);
-        }
-
-        function showResults() {
-          document.getElementById('pollResults').style.display = 'block';
-          updateResultsUI();
-        }
-
-        const pollForm = document.getElementById('pollForm');
-        pollForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          const choice = (new FormData(pollForm)).get('poll');
-          if (!choice) { alert('Please select an option before voting.'); return; }
-          const counts = getCounts();
-          if (!counts[choice] && counts[choice] !== 0) {
-            // unknown choice - ignore
-            return;
-          }
-          counts[choice] += 1;
-          saveCounts(counts);
-          showResults();
-          // Disable inputs after voting
-          Array.from(pollForm.elements).forEach(el => el.disabled = true);
-        });
-
-        document.getElementById('viewResults').addEventListener('click', function() {
-          showResults();
-        });
-
-        // Initialize on load
-        updateResultsUI();
+      (async function() {
+        await initializeFirebase();
+        const counts = await fetchCounts();
+        updateResultsUI(counts);
       })();
     </script>
   </body>
