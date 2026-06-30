@@ -282,6 +282,56 @@
           <img src="assets/anwar.png" alt="News illustration" />
         </div>
 
+        <!-- Reader Poll Section -->
+        <section class="poll-section" aria-labelledby="pollHeading">
+          <h2 id="pollHeading" class="poll-question">Before reading the article, what are your thoughts?<br>Do you support excluding the high-income (T20) group from petrol subsidies?</h2>
+
+          <form id="pollForm">
+            <div class="poll-options">
+              <div class="poll-option">
+                <label>
+                  <input type="radio" name="poll" value="yes"> Yes, I support excluding T20
+                </label>
+              </div>
+              <div class="poll-option">
+                <label>
+                  <input type="radio" name="poll" value="no"> No, keep subsidies universal
+                </label>
+              </div>
+              <div class="poll-option">
+                <label>
+                  <input type="radio" name="poll" value="prefer_targeted"> Prefer more targeted support for B40/M40
+                </label>
+              </div>
+              <div class="poll-option">
+                <label>
+                  <input type="radio" name="poll" value="unsure"> Unsure / Need more information
+                </label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-submit">Vote</button>
+              <button type="button" id="viewResults" class="btn btn-clear">View Results</button>
+            </div>
+          </form>
+
+          <div id="pollResults" class="poll-results" aria-live="polite" style="display:none; margin-top:1rem;">
+            <div><strong>Results</strong></div>
+            <div style="margin-top:0.5rem;">
+              <div>Yes: <span id="count-yes">0</span></div>
+              <div class="poll-bar" aria-hidden="true"><div id="fill-yes" class="poll-bar-fill" style="width:0%"></div></div>
+              <div>No: <span id="count-no">0</span></div>
+              <div class="poll-bar" aria-hidden="true"><div id="fill-no" class="poll-bar-fill" style="width:0%"></div></div>
+              <div>Prefer targeted: <span id="count-prefer_targeted">0</span></div>
+              <div class="poll-bar" aria-hidden="true"><div id="fill-prefer_targeted" class="poll-bar-fill" style="width:0%"></div></div>
+              <div>Unsure: <span id="count-unsure">0</span></div>
+              <div class="poll-bar" aria-hidden="true"><div id="fill-unsure" class="poll-bar-fill" style="width:0%"></div></div>
+            </div>
+            <p style="margin-top:0.75rem; font-size:0.9rem; color:#7b8794;"><em>Poll is for reader feedback only and is not a formal survey.</em></p>
+          </div>
+        </section>
+
         <div class="article-body">
           <p>KUALA LUMPUR: Prime Minister Datuk Seri Anwar Ibrahim said that the government will soon finalise a more comprehensive fuel subsidy proposal for the high-income group in Malaysia.</p>
 
@@ -336,56 +386,6 @@
           </p>
         </div>
       </article>
-
-      <!-- Reader Poll Section -->
-      <section class="poll-section" aria-labelledby="pollHeading">
-        <h2 id="pollHeading" class="poll-question">Do you support excluding the high-income (T20) group from petrol subsidies?</h2>
-
-        <form id="pollForm">
-          <div class="poll-options">
-            <div class="poll-option">
-              <label>
-                <input type="radio" name="poll" value="yes"> Yes, I support excluding T20
-              </label>
-            </div>
-            <div class="poll-option">
-              <label>
-                <input type="radio" name="poll" value="no"> No, keep subsidies universal
-              </label>
-            </div>
-            <div class="poll-option">
-              <label>
-                <input type="radio" name="poll" value="prefer_targeted"> Prefer more targeted support for B40/M40
-              </label>
-            </div>
-            <div class="poll-option">
-              <label>
-                <input type="radio" name="poll" value="unsure"> Unsure / Need more information
-              </label>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn-submit">Vote</button>
-            <button type="button" id="viewResults" class="btn btn-clear">View Results</button>
-          </div>
-        </form>
-
-        <div id="pollResults" class="poll-results" aria-live="polite" style="display:none; margin-top:1rem;">
-          <div><strong>Results</strong></div>
-          <div style="margin-top:0.5rem;">
-            <div>Yes: <span id="count-yes">0</span></div>
-            <div class="poll-bar" aria-hidden="true"><div id="fill-yes" class="poll-bar-fill" style="width:0%"></div></div>
-            <div>No: <span id="count-no">0</span></div>
-            <div class="poll-bar" aria-hidden="true"><div id="fill-no" class="poll-bar-fill" style="width:0%"></div></div>
-            <div>Prefer targeted: <span id="count-prefer_targeted">0</span></div>
-            <div class="poll-bar" aria-hidden="true"><div id="fill-prefer_targeted" class="poll-bar-fill" style="width:0%"></div></div>
-            <div>Unsure: <span id="count-unsure">0</span></div>
-            <div class="poll-bar" aria-hidden="true"><div id="fill-unsure" class="poll-bar-fill" style="width:0%"></div></div>
-          </div>
-          <p style="margin-top:0.75rem; font-size:0.9rem; color:#7b8794;"><em>Poll is for reader feedback only and is not a formal survey.</em></p>
-        </div>
-      </section>
     </main>
 
     <!-- Footer -->
@@ -427,15 +427,23 @@
 
         function updateResultsUI() {
           const counts = getCounts();
-          const total = Object.values(counts).reduce((a,b)=>a+b,0) || 1;
+          const values = Object.values(counts);
+          const maxCount = Math.max(...values, 0);
+
           document.getElementById('count-yes').textContent = counts.yes;
           document.getElementById('count-no').textContent = counts.no;
           document.getElementById('count-prefer_targeted').textContent = counts.prefer_targeted;
           document.getElementById('count-unsure').textContent = counts.unsure;
-          document.getElementById('fill-yes').style.width = Math.round((counts.yes/total)*100) + '%';
-          document.getElementById('fill-no').style.width = Math.round((counts.no/total)*100) + '%';
-          document.getElementById('fill-prefer_targeted').style.width = Math.round((counts.prefer_targeted/total)*100) + '%';
-          document.getElementById('fill-unsure').style.width = Math.round((counts.unsure/total)*100) + '%';
+
+          const widthFor = (value) => {
+            if (maxCount <= 0) return '0%';
+            return Math.round((value / maxCount) * 100) + '%';
+          };
+
+          document.getElementById('fill-yes').style.width = widthFor(counts.yes);
+          document.getElementById('fill-no').style.width = widthFor(counts.no);
+          document.getElementById('fill-prefer_targeted').style.width = widthFor(counts.prefer_targeted);
+          document.getElementById('fill-unsure').style.width = widthFor(counts.unsure);
         }
 
         function showResults() {
